@@ -49,6 +49,9 @@ class Store(object):
     def get_all_threads(self):
         return self._thread.find({})
 
+    def get_specific_threads(self, keyword):
+        return self._thread.find({"name": {"$regex": ".*" + keyword + ".*"}})
+
     def has_thread_pics(self, tid):
         cursor = self._pic_url.find({"tid": tid})
 
@@ -59,6 +62,10 @@ class Store(object):
 
     def save_thread_pics(self, tid, pic_url_list):
         self._pic_url.insert_one({"tid": tid, "url": pic_url_list})
+
+    def has_pic(self, pic_url):
+        #TODO
+        return False
 
 
 # 获取页面里的帖子
@@ -158,14 +165,6 @@ def fetch_thread_pic_info(thread_ids):
             collect_thread_pics(tid, url)
 
 
-# 下载所有帖子中图片
-def download_thread_pic():
-    all_threads = g_store.get_all_threads()
-
-    for t in all_threads:
-        pass
-
-
 if __name__ == "__main__":
 
     print("start")
@@ -200,11 +199,4 @@ if __name__ == "__main__":
     print("----------------------")
     print("帖子内图片信息更新完毕")
     print("")
-    time.sleep(3)
-
-    # 下载帖子内图片
-    download_thread_pic()
-
-    print("----------------------")
-    print("所有帖子图片下载完毕")
-    print("")
+    time.sleep(2)
