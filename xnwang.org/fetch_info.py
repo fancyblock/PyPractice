@@ -178,7 +178,7 @@ if __name__ == "__main__":
     g_header["Connection"] = "keep-alive"
     g_header["Referer"] = "http://xnwang.org/"
     g_header["Upgrade-Insecure-Requests"] = "1"
-    g_header["Cookie"] = """UM_distinctid=1608ddc94de6a3-09e7feee1c7152-b7a103e-1fa400-1608ddc94dfadb; gatz_2132_saltkey=Cy7uLLw6; gatz_2132_lastvisit=1514903378; gatz_2132_atarget=1; gatz_2132_auth=aff6W88QaKI7NzEiEtLhYCEoENdYRGAk2nyqFg7oErSwh4fAsB5dP4vblabgJEXm3sM4%2B7nVS4XMyh7bsUJcxEXLqiA; gatz_2132_lastcheckfeed=279662%7C1514907001; gatz_2132_smile=1D1; gatz_2132_nofavfid=1; gatz_2132_member_login_status=1; PHPSESSID=tt00rnimnd6drds1nomnchee15; gatz_2132_ulastactivity=5c0b4MpedJq8uXVjyiouUjNz%2Bm2qzPLMxLyxVFas8Vm1KXSBJ3k5; CNZZDATA1271567903=933849855-1514205120-http%253A%252F%252Fxnwang.org%252F%7C1515252771; gatz_2132_sid=sR77Jl; gatz_2132_lip=116.234.111.239%2C1515254125; gatz_2132_sendmail=1; gatz_2132_noticeTitle=1; gatz_2132_st_t=279662%7C1515257465%7C2709520b801eb238e0310b6f0145de98; gatz_2132_forum_lastvisit=D_42_1515253161D_44_1515257465; gatz_2132_visitedfid=2D44D42; gatz_2132_st_p=279662%7C1515257491%7C244946694665e5e204f31679590d6488; gatz_2132_viewid=tid_144828; gatz_2132_lastact=1515257620%09forum.php%09ajax"""
+    g_header["Cookie"] = "[----------这里填入Cookies----------]"
     g_header["Host"] = "xnwang.org"
     g_header["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36"
 
