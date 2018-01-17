@@ -50,8 +50,8 @@ def download_pic(raw_url, url):
             # 写数据库
             g_store.add_pic(raw_url, pic_data.content)
             print("download " + url)
-    except:
-        pass
+    except BaseException as be:
+        print(str(be))
 
 
 # 下载所有帖子中图片
@@ -82,8 +82,9 @@ def download_thread_pic(keyword):
             for index in pending_download_list:
                 raw_url = urls[index]
                 download_pic(raw_url, site_base_url + raw_url)
-    except:
+    except BaseException as be:
         print("-------------------")
+        print(str(be))
         time.sleep(1.0)
         winsound.Beep(3500, 1500)
 
