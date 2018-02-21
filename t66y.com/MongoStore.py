@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+import bson.binary
 
 
 # 用于管理存储相关的类
@@ -38,7 +39,6 @@ class Store(object):
         return None
 
     def set_thread_urls(self, thread_id, urls):
-        thread_name = self.get_thread_name(thread_id)
         self._thread.update_one({"tid": thread_id}, {"$set": {"url": urls}})
 
     def get_all_threads(self):
@@ -47,6 +47,19 @@ class Store(object):
     def get_specific_threads(self, keyword):
         return self._thread.find({"name": {"$regex": ".*" + keyword + ".*"}})
 
+    def get_thread_pic_urls(self, tid):
+        cursor = self._thread.find({"tid": tid})
+        for val in cursor:
+            return val["url"]
+
+        return []
+
     def has_pic(self, pic_url):
-        #TODO
+        cursor = self._pic.find({"url": pic_url})
+        for val in cursor:
+            return True
+
         return False
+
+    def add_pic(self, raw_url, img_data):
+        self._pic.insert_one({"url": raw_url, "data": bson.binary.Binary(img_data)})
