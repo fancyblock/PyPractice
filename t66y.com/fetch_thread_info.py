@@ -49,15 +49,11 @@ def fetch_pic_info(tid, store):
 
     if page_data.status_code == 200:
         page_soup = BeautifulSoup(page_data.text, "html.parser")
-        pic_info = page_soup.find(name="div", attrs={"class":"tpc_content do_not_catch"})
-        table = pic_info.find_all(name="table")
-        if table:
-            pic_info = table[0]
+        pic_info = page_soup.find_all(name="input", attrs={"type": "image"})
 
-        all_pic_urls = pic_info.find_all(name="input", attrs={"type": "image"})
         url_list = []
 
-        for i in all_pic_urls:
+        for i in pic_info:
             img_url = i["src"]
             ext_name = img_url.split('.')[-1]
             if ext_name == "gif" or ext_name == "GIF":
@@ -105,6 +101,7 @@ def main():
 
     for thread in all_threads:
         if "url" not in thread:
+            print( "url not in thread: " + thread["tid"] )
             fetch_pic_info(thread["tid"], store)
 
 
