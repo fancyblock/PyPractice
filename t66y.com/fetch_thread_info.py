@@ -12,6 +12,8 @@ g_base_url = "http://ac.postcc.us/"
 # 获取页面中帖子信息
 def fetch_thread_info(url, store):
 
+    print("fetch page info: " + url)
+
     page_data = requests.get(url)
     new_thread_ids = []
 
@@ -122,8 +124,7 @@ def main():
         if len(new_thread_ids) == 0:
             break
         else:
-            if len(new_thread_ids) > 0:
-                all_new_thread_ids.extend(new_thread_ids)
+            all_new_thread_ids.extend(new_thread_ids)
 
             page_data = requests.get(url)
             if page_data.status_code == 200:

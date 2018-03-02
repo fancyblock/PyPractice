@@ -14,8 +14,21 @@ def download_pic(proxy, store, url):
             store.add_pic(url, pic_data.content)
             print("download " + url)
 
+            return True
+        else:
+            print(str(pic_data.status_code))
+
+            if pic_data.status_code == 404:
+                return True
+
     except BaseException as be:
+        exp_str = str(be)
         print(str(be))
+
+        if "certificate verify failed" in exp_str:
+            return True
+
+    return False
 
 
 # 下载所有帖子中图片
@@ -26,15 +39,31 @@ def download_thread_pic(proxy, store, keyword):
     try:
         for t in all_threads:
             tid = t["tid"]
+
+            if not store.is_thread_need_download(tid):
+                continue
+
             urls = store.get_thread_pic_urls(tid)
 
             print("download " + tid)
 
             # 有缺文件或者一个都没有
+            pending_urls = []
             for i in range(len(urls)):
                 url = urls[i]
                 if not store.has_pic(url):
-                    download_pic(proxy, store, url)
+                    pending_urls.append(url)
+
+            if len(pending_urls) > 0:
+                result = True
+                for u in pending_urls:
+                    result = download_pic(proxy, store, u) and result
+
+                if result:
+                    store.set_thread_pic_done(tid)
+
+            else:
+                store.set_thread_pic_done(tid)
 
     except BaseException as be:
         print("-------------------")
