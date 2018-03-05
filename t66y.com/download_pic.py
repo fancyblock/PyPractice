@@ -45,7 +45,7 @@ def download_thread_pic(proxy, store, keyword):
 
             urls = store.get_thread_pic_urls(tid)
 
-            print("download " + tid)
+            print("download " + tid + "  [" + str(len(urls)) + "]")
 
             # 有缺文件或者一个都没有
             pending_urls = []
@@ -54,7 +54,11 @@ def download_thread_pic(proxy, store, keyword):
                 if not store.has_pic(url):
                     pending_urls.append(url)
 
-            if len(pending_urls) > 0:
+            pending_url_count = len(pending_urls)
+
+            print("need download " + str(pending_url_count) + " pictures.")
+
+            if pending_url_count > 0:
                 result = True
                 for u in pending_urls:
                     result = download_pic(proxy, store, u) and result

@@ -47,7 +47,7 @@ class Store(object):
 
         for val in cursor:
             if "pic_done" in val:
-                pic_done = val["pic_done"]
+                pic_done = not val["pic_done"]
             break
 
         return pic_done
