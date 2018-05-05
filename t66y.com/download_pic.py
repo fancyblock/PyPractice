@@ -34,7 +34,12 @@ def download_pic(proxy, store, url):
 # 下载所有帖子中图片
 def download_thread_pic(proxy, store, keyword):
 
-    all_threads = store.get_specific_threads(keyword)
+    all_threads = None
+
+    if keyword:
+        all_threads = store.get_specific_threads(keyword)
+    else:
+        all_threads = store.get_all_threads()
 
     try:
         for t in all_threads:
@@ -80,19 +85,18 @@ if __name__ == "__main__":
 
     print("start")
 
+    # 数据库
+    store = MongoStore.Store("127.0.0.1", 27017, "t66y_pic")
+
+    proxy = {"http": "http://127.0.0.1:1080", "https": None}
+
     if len(argv) < 2:
-        print("未添加参数")
+        download_thread_pic(proxy, store, None)
     else:
-        # 数据库
-        store = MongoStore.Store("127.0.0.1", 27017, "t66y_pic")
-
-        proxy = {"http": "http://127.0.0.1:1080", "https": None}
-
-        # 下载帖子内图片
         download_thread_pic(proxy, store, argv[1])
 
-        print("----------------------")
-        print("图片下载完毕")
-        print("")
+    print("----------------------")
+    print("图片下载完毕")
+    print("")
 
-        winsound.Beep(2500, 1500)
+    winsound.Beep(2500, 1500)
