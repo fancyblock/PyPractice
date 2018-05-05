@@ -18,7 +18,7 @@ def download_pic(proxy, store, url):
         else:
             print(str(pic_data.status_code))
 
-            if pic_data.status_code == 404:
+            if pic_data.status_code == 404 or pic_data.status_code == 403 or pic_data.status_code == 502:
                 return True
 
     except BaseException as be:
