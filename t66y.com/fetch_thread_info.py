@@ -5,8 +5,9 @@ import winsound
 import time
 
 
-g_page_url = "http://ac.postcc.us/thread0806.php?fid=16"
-g_base_url = "http://ac.postcc.us/"
+g_page_url = "http://t66y.com/thread0806.php?fid=16"
+g_base_url = "http://t66y.com/"
+proxy = {"http": "http://127.0.0.1:1080", "https": None}
 
 
 # 获取页面中帖子信息
@@ -14,7 +15,7 @@ def fetch_thread_info(url, store):
 
     print("fetch page info: " + url)
 
-    page_data = requests.get(url)
+    page_data = requests.get(url, proxies=proxy)
     new_thread_ids = []
 
     if page_data.status_code == 200:
@@ -52,7 +53,7 @@ def fetch_thread_info(url, store):
 # 获取帖子中图片信息
 def fetch_pic_info(tid, store):
     url = g_base_url + store.get_thread_url(tid)
-    page_data = requests.get(url)
+    page_data = requests.get(url, proxies=proxy)
 
     if page_data.status_code == 200:
         page_soup = BeautifulSoup(page_data.text, "html.parser")
@@ -76,7 +77,7 @@ def fetch_pic_info(tid, store):
 # 下载一张图片
 def download_pic(store, url):
     try:
-        pic_data = requests.get(url)
+        pic_data = requests.get(url, proxies=proxy)
 
         if pic_data.status_code == 200:
             # 写数据库
@@ -126,7 +127,7 @@ def main():
         else:
             all_new_thread_ids.extend(new_thread_ids)
 
-            page_data = requests.get(url)
+            page_data = requests.get(url, proxies=proxy)
             if page_data.status_code == 200:
                 page_text = page_data.content.decode("gbk").encode("utf-8")
                 page_soup = BeautifulSoup(page_text, "html.parser")

@@ -14,15 +14,14 @@ class Store(object):
     def __init__(self, address, port):
         self._client = MongoClient(address, port)
         self._db = self._client["milf_pic"]
-        self._thread = self._db["thread_info"]
-        self._pic_url = self._db["thread_pic_url"]
+        self._thread = self._db["thread_data"]
         self._pic_data = self._db["pic_data"]
 
     def get_specific_threads(self, keyword):
         return self._thread.find({"name": {"$regex": ".*" + keyword + ".*"}})
 
     def get_thread_pic_urls(self, tid):
-        cursor = self._pic_url.find({"tid": tid})
+        cursor = self._thread.find({"tid": tid})
         for val in cursor:
             return val["url"]
 
